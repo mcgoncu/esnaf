@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Esnaf</string>
+    <string name="title_mainPage">Ana Sayfa</string>
+    <string name="title_section1">Fotoğraflar</string>
+    <string name="title_section2">Hakkımızda</string>
+    <string name="title_section3">İletişim</string>
+    <string name="navigation_drawer_open">Sol mönüyü aç</string>
+    <string name="navigation_drawer_close">Sol mönüyü kapat</string>
+    <string name="action_example">Aksiyon</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+</resources>
