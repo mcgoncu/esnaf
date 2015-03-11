@@ -1,5 +1,7 @@
 package com.mandm.esnaf;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ImageView;
 
 
 public class MainActivity extends ActionBarActivity
@@ -21,7 +24,6 @@ public class MainActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
     private CharSequence mTitle;
 
     @Override
@@ -56,11 +58,12 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction
                 .replace(R.id.container, fragment)
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         if (position > 0) {
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
         } else {
             fragmentManager.popBackStackImmediate();
         }
@@ -69,7 +72,6 @@ public class MainActivity extends ActionBarActivity
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
@@ -108,18 +110,38 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private NavigationDrawerFragment getmNavigationDrawerFragment(){
+    private NavigationDrawerFragment getmNavigationDrawerFragment() {
         return mNavigationDrawerFragment;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        int position = 0;
+        if (count > 0) {
+            String name = fragmentManager.getBackStackEntryAt(count - 1).getName();
+            if (name.equals(PhotosFragment.class.getSimpleName()))
+                position = 1;
+            //TODO : mcgoncu yeni fragmentları eklemeyi unutma
+        }
+        getmNavigationDrawerFragment().selectItem(position);
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements View.OnClickListener {
 
         public static PlaceholderFragment newInstance() {
             return new PlaceholderFragment();
         }
+
+        ImageView ivFacebook;
+        ImageView ivTwitter;
+        ImageView ivGPlus;
 
         public PlaceholderFragment() {
         }
@@ -127,7 +149,16 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_main, container, false);
+            View view = inflater.inflate(R.layout.fragment_main, container, false);
+            ivFacebook = (ImageView) view.findViewById(R.id.imageViewFacebook);
+            ivTwitter = (ImageView) view.findViewById(R.id.imageViewTwitter);
+            ivGPlus = (ImageView) view.findViewById(R.id.imageViewGooglePlus);
+
+            ivFacebook.setOnClickListener(this);
+            ivTwitter.setOnClickListener(this);
+            ivGPlus.setOnClickListener(this);
+
+            return view;
         }
 
         @Override
@@ -135,6 +166,22 @@ public class MainActivity extends ActionBarActivity
             super.onResume();
             getActivity().setTitle(getString(R.string.app_name));
             ((MainActivity) getActivity()).restoreActionBar();
+        }
+
+        @Override
+        public void onClick(View view) {
+            String url = "";
+
+            if (view == ivFacebook) {
+                url = Constants.facebookUrl;
+            } else if (view == ivTwitter) {
+                url = Constants.twitterUrl;
+            } else if (view == ivGPlus) {
+                url = Constants.gPlusUrl;
+            }
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
         }
     }
 }

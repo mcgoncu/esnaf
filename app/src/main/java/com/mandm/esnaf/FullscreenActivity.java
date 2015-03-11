@@ -1,7 +1,5 @@
 package com.mandm.esnaf;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,26 +15,14 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 
 public class FullscreenActivity extends FragmentActivity {
 
     public static final String CURRENT_FILE = "current_file";
 
-    private String[] mFileNames;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        try {
-            mFileNames = getAssets().list(Constants.PHOTOS_FOLDER);
-        } catch (IOException e) {
-            mFileNames = new String[0];
-            e.printStackTrace();
-        }
 
         int currentFile = getIntent().getIntExtra(CURRENT_FILE, 0);
 
@@ -59,12 +45,12 @@ public class FullscreenActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return ScreenSlidePageFragment.newInstance(mFileNames[position]);
+            return ScreenSlidePageFragment.newInstance(Constants.DRAWABLES.get(position));
         }
 
         @Override
         public int getCount() {
-            return mFileNames.length;
+            return Constants.DRAWABLES.size();
         }
     }
 
@@ -72,12 +58,12 @@ public class FullscreenActivity extends FragmentActivity {
 
         private static final String FILE_NAME = "file_name";
 
-        private String mFileName;
+        private int mResourceId;
 
-        public static ScreenSlidePageFragment newInstance(String fileName) {
+        public static ScreenSlidePageFragment newInstance(int resourceId) {
             ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(FILE_NAME, fileName);
+            bundle.putInt(FILE_NAME, resourceId);
             fragment.setArguments(bundle);
             return fragment;
         }
@@ -89,7 +75,7 @@ public class FullscreenActivity extends FragmentActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mFileName = getArguments().getString(FILE_NAME);
+            mResourceId = getArguments().getInt(FILE_NAME);
         }
 
         @Override
@@ -101,14 +87,7 @@ public class FullscreenActivity extends FragmentActivity {
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT));
 
-            InputStream inputStream = null;
-            try {
-                inputStream = getActivity().getAssets().open(Constants.PHOTOS_FOLDER + "/" + mFileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            imageView.setImageBitmap(bitmap);
+            imageView.setImageResource(mResourceId);
 
             return imageView;
         }

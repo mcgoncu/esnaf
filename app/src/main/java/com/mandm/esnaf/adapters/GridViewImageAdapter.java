@@ -1,7 +1,6 @@
 package com.mandm.esnaf.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,8 +8,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.mandm.esnaf.Constants;
-
-import java.lang.ref.WeakReference;
 
 public class GridViewImageAdapter extends BaseAdapter {
 
@@ -48,31 +45,7 @@ public class GridViewImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-//        WorkerTask task = new WorkerTask(imageView, Constants.DRAWABLES.get(position));
-//        task.execute();
         imageView.setImageResource(Constants.DRAWABLES.get(position));
-
         return imageView;
-    }
-
-    class WorkerTask extends AsyncTask<Void, Void, Void> {
-        private final WeakReference<ImageView> mImageViewReference;
-        private int mResourceId;
-
-        public WorkerTask(ImageView imageView, int resourceId) {
-            // Use a WeakReference to ensure the ImageView can be garbage collected
-            mImageViewReference = new WeakReference<>(imageView);
-            mResourceId = resourceId;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            final ImageView imageView = mImageViewReference.get();
-            if(imageView != null)
-            {
-                imageView.setImageResource(mResourceId);
-            }
-            return null;
-        }
     }
 }

@@ -4,13 +4,51 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".MainActivity$PlaceholderFragment"
+    >
 
-    <TextView android:id="@+id/section_label"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageViewMain"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/main"
+        android:scaleType="center"
+        android:layout_above="@+id/linearLayout"
+        android:layout_margin="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_mainPage"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/linearLayout"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewFacebook"
+            android:src="@drawable/facebookicon"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewTwitter"
+            android:src="@drawable/twittericon"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewGooglePlus"
+            android:src="@drawable/googleicon"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+    </LinearLayout>
 
 </RelativeLayout>

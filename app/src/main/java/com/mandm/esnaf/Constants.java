@@ -23,4 +23,8 @@ public class Constants {
         add(R.drawable.photo10);
         add(R.drawable.photo11);
     }};
+
+    public static final String facebookUrl = "http://facebook.com/kasetbistro";
+    public static final String twitterUrl = "http://twitter.com/kasetsocial";
+    public static final String gPlusUrl = "http://plus.google.com/117464707422371047782/about";
 }
