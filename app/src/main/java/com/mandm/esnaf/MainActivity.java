@@ -49,10 +49,12 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 fragment = PhotosFragment.newInstance();
                 break;
-            //case 2:
-            //    break;
-            //case 3:
-            //    break;
+            case 2:
+                fragment = AboutFragment.newInstance();
+                break;
+            case 3:
+                fragment = ContactFragment.newInstance();
+                break;
             default:
                 fragment = PlaceholderFragment.newInstance();
                 break;
@@ -60,12 +62,13 @@ public class MainActivity extends ActionBarActivity
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction
-                .replace(R.id.container, fragment)
+                .replace(R.id.container, fragment, fragment.getClass().getSimpleName())
                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        if (position > 0) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+
+        if (position == 0) {
+            while (fragmentManager.popBackStackImmediate());
         } else {
-            fragmentManager.popBackStackImmediate();
+            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
         }
         fragmentTransaction.commit();
     }
@@ -125,9 +128,12 @@ public class MainActivity extends ActionBarActivity
             String name = fragmentManager.getBackStackEntryAt(count - 1).getName();
             if (name.equals(PhotosFragment.class.getSimpleName()))
                 position = 1;
-            //TODO : mcgoncu yeni fragmentları eklemeyi unutma
+            else if (name.equals(AboutFragment.class.getSimpleName()))
+                position = 2;
+            else if (name.equals(ContactFragment.class.getSimpleName()))
+                position = 3;
         }
-        getmNavigationDrawerFragment().selectItem(position);
+        getmNavigationDrawerFragment().setItemChecked(position);
     }
 
     /**
@@ -164,7 +170,7 @@ public class MainActivity extends ActionBarActivity
         @Override
         public void onResume() {
             super.onResume();
-            getActivity().setTitle(getString(R.string.app_name));
+            getActivity().setTitle(R.string.app_name);
             ((MainActivity) getActivity()).restoreActionBar();
         }
 

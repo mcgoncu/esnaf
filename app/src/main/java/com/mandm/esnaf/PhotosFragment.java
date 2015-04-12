@@ -53,12 +53,18 @@ public class PhotosFragment extends Fragment {
                 new Runnable() {
                     @Override
                     public void run() {
-        GridViewImageAdapter mGridViewImageAdapter = new GridViewImageAdapter(getActivity(), columnWidth);
+                        GridViewImageAdapter mGridViewImageAdapter = new GridViewImageAdapter(getActivity(), columnWidth);
                         mGridView.setAdapter(mGridViewImageAdapter);
                     }
                 }, 0);
-        getActivity().setTitle(R.string.title_section1);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(R.string.title_section1);
+        ((MainActivity) getActivity()).restoreActionBar();
     }
 
     private int getScreenWidth() {
