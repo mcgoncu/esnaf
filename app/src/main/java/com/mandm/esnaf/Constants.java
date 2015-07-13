@@ -27,4 +27,11 @@ public class Constants {
     public static final String facebookUrl = "http://facebook.com/kasetbistro";
     public static final String twitterUrl = "http://twitter.com/kasetsocial";
     public static final String gPlusUrl = "http://plus.google.com/117464707422371047782/about";
+
+    public static final String PUSH_MESSAGE_EVENT_ID_KEY = "event_id";
+
+    class Methods{
+        public static final String CATEGORY = "category";
+        public static final String INDEX = "index";
+    }
 }
